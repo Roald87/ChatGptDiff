@@ -1,0 +1,45 @@
+﻿@page "/"
+@inject ChatGPTDiffApp.Services.ChatGPTService ChatGPTService
+
+<h1>Chat with GPT</h1>
+<div>
+    <textarea @bind="prompt" placeholder="Enter your prompt here"></textarea>
+    <button @onclick="GetResponse">Send</button>
+</div>
+
+@if (!string.IsNullOrEmpty(response))
+{
+    <div>
+        <label for="responseBox">Response:</label>
+        <textarea id="responseBox" readonly @bind="response"></textarea>
+    </div>
+}
+
+@code {
+    private string prompt;
+    private string response;
+
+    private async Task GetResponse()
+    {
+        response = await ChatGPTService.GetResponseAsync(prompt);
+        @* prompt = ""; // Optionally clear input after sending *@
+    }
+}
+
+<style>
+    textarea {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    button {
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    label {
+        display: block;
+        margin-top: 20px;
+    }
+</style>
+

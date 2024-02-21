@@ -1,0 +1,17 @@
+@page "/apikey-config"
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+
+<h3>Configure API Key</h3>
+<input @bind="apiKey" placeholder="Enter your API Key here" />
+<button @onclick="SaveApiKey">Save API Key</button>
+
+@code {
+    private string apiKey;
+
+    private async Task SaveApiKey()
+    {
+        await LocalStorage.SetItemAsStringAsync("apiKey", apiKey);
+        NavigationManager.NavigateTo("/"); // Redirect to home page or a confirmation page
+    }
+}
