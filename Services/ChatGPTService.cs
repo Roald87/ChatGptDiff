@@ -19,28 +19,35 @@ namespace ChatGPTDiffApp.Services
             _httpClient = httpClient;
             _localStorage = localStorage;
         }
-        
+
         public async Task<string> GetResponseAsync(string userPrompt)
         {
             string apiKey = await _localStorage.GetItemAsStringAsync("apiKey");
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
-             // Append instructions to the user's prompt
-            string promptWithInstructions = userPrompt + " Respond only with the things the user asked. Do not give any extra explanation. Be brief.";
+            // Append instructions to the user's prompt
+            string promptWithInstructions =
+                userPrompt
+                + " Respond only with the things the user asked. Do not give any extra explanation. Be brief.";
 
             var data = new
             {
                 model = "gpt-3.5-turbo",
                 messages = new[]
                 {
-                    new { role = "system", content = "You are a helpful assistant. Respond only with the things the user asked. Do not give any extra explanation. Be brief." },
+                    new
+                    {
+                        role = "system",
+                        content = "You are a helpful assistant. Respond only with the things the user asked. Do not give any extra explanation. Be brief."
+                    },
                     new { role = "user", content = promptWithInstructions }
                 }
             };
             var response = await _httpClient.PostAsJsonAsync(OpenAiEndpoint, data);
             response.EnsureSuccessStatusCode();
             var responseJson = await response.Content.ReadFromJsonAsync<JsonElement>();
-            
+
             // Correctly access the 'choices' property
             var choices = responseJson.GetProperty("choices");
             if (choices.GetArrayLength() > 0)
