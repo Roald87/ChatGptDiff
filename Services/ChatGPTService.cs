@@ -1,9 +1,5 @@
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 using Blazored.LocalStorage;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Text.Json;
 
 namespace ChatGPTDiffApp.Services
