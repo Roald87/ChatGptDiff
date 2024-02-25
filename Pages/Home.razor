@@ -1,23 +1,23 @@
 ﻿@page "/"
 @inject ChatGPTDiffApp.Services.ChatGPTService ChatGPTService
-@using ChatGPTDiffApp.Models
+@using ChatGPTDiffApp.Models 
 
 <h1>Chat with GPT</h1>
 
-<div>
-    <textarea @bind="newPrompt" placeholder="Enter your prompt here"></textarea>
-    <button @onclick="SendPrompt">Send</button>
-</div>
-
-@if (conversation.Any())
+@foreach (var message in conversation)
 {
-    @foreach (var message in conversation)
+    if (message.Role == "user")
     {
-        <div>
-            <p>@message.Role: @message.Content</p>
-        </div>
+        <textarea @bind="message.Content" placeholder="Your prompt"></textarea>
+    }
+    else if (message.Role == "assistant")
+    {
+        <textarea readonly @bind="message.Content" class="response"></textarea>
     }
 }
+
+<textarea @bind="newPrompt" placeholder="Enter your next prompt here"></textarea>
+<button @onclick="SendPrompt">Send</button>
 
 @code {
     private List<Message> conversation = new List<Message>();
@@ -52,14 +52,19 @@
 }
 
 
-
 <style>
-    textarea {
-        width: 100%;
-        margin-bottom: 10px;
-        padding: 10px;
-        box-sizing: border-box;
-    }
+textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+textarea.response {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
     button {
         padding: 10px 20px;
         cursor: pointer;
