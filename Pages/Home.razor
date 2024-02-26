@@ -1,28 +1,54 @@
 ﻿@page "/"
 @inject ChatGPTDiffApp.Services.ChatGPTService ChatGPTService
+@using ChatGPTDiffApp.Models 
+@using System.Linq
 
 <h1>Chat with GPT</h1>
-<div>
-    <textarea @bind="prompt" placeholder="Enter your prompt here"></textarea>
-    <button @onclick="GetResponse">Send</button>
-</div>
 
-@if (!string.IsNullOrEmpty(response))
+<textarea @bind="newPrompt" placeholder="Enter your next prompt here"></textarea>
+<button @onclick="SendPrompt">Send</button>
+
+@foreach (var message in conversation)
 {
-    <div>
-        <label for="responseBox">Response:</label>
-        <textarea id="responseBox" readonly @bind="response"></textarea>
-    </div>
+    if (message.Role == "user")
+    {
+        <textarea @bind="message.Content" placeholder="Your prompt"></textarea>
+    }
+    else if (message.Role == "assistant")
+    {
+        <textarea readonly @bind="message.Content" class="response"></textarea>
+    }
 }
 
 @code {
-    private string prompt;
-    private string response;
+    private List<Message> conversation = new List<Message>();
+    private string newPrompt;
 
-    private async Task GetResponse()
+    private async Task SendPrompt()
     {
-        response = await ChatGPTService.GetResponseAsync(prompt);
-        @* prompt = ""; // Optionally clear input after sending *@
+        if (!string.IsNullOrWhiteSpace(newPrompt))
+        {
+            // Add the new user prompt to the conversation
+            conversation.Insert(0, new Message { Role = "user", Content = newPrompt });
+
+            // Prepare the data for the request
+            var responseContent = await ChatGPTService.GetResponseAsync(conversation);
+            
+            // Add the response to the conversation
+            if (!string.IsNullOrEmpty(responseContent))
+            {
+                conversation.Insert(0, new Message { Role = "assistant", Content = responseContent });
+            }
+
+            // Clear the new prompt field and prepare for the next input
+            newPrompt = string.Empty;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        // Optionally initialize the conversation with an empty prompt for the user to fill
+        newPrompt = string.Empty;
     }
 }
 
@@ -32,6 +58,10 @@
         margin-bottom: 10px;
         padding: 10px;
         box-sizing: border-box;
+    }
+    textarea.response {
+        background-color: #f3f3f3;
+        color: #333;
     }
     button {
         padding: 10px 20px;

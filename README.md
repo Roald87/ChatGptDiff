@@ -2,20 +2,10 @@
 
 ### Developers
 
-1. Add `username/.config/dotnet-tools.json` with the following content
-
-```json
-{
-  "isRoot": true,
-  "tools": {
-    "CSharpier": {
-      "version": "0.22.1",
-      "commands": ["dotnet-csharpier"]
-    }
-  }
-}
-```
+Prerequisite: .NET 8.0 SDK
 
 ```
-pre-commit install
+dotnet tool install csharpier # install code formatter
+pre-commit install # install pre-commits to format code before checking ing
+dotnet run # build the project and launch the app in the browser
 ```
