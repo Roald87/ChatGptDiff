@@ -7,7 +7,7 @@
 <button @onclick="SaveApiKey">Save API Key</button>
 
 @code {
-    private string apiKey;
+    private string apiKey = string.Empty;
 
     private async Task SaveApiKey()
     {
