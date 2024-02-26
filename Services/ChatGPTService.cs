@@ -19,7 +19,7 @@ namespace ChatGPTDiffApp.Services
 
         public async Task<string> GetResponseAsync(List<Message> conversation)
         {
-            string apiKey = await _localStorage.GetItemAsStringAsync("apiKey");
+            string apiKey = await _localStorage.GetItemAsStringAsync("apiKey") ?? string.Empty;
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
@@ -35,7 +35,7 @@ namespace ChatGPTDiffApp.Services
             {
                 var firstChoice = choices[0];
                 var message = firstChoice.GetProperty("message");
-                return message.GetProperty("content").GetString();
+                return message.GetProperty("content").GetString() ?? string.Empty;
             }
 
             return "No response";
