@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTDiffApp", "ChatGPTDiffApp.csproj", "{DDE9D453-5FC8-4092-972C-8A063E021E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTDiffApp", "ChatGptDiffApp/ChatGPTDiffApp.csproj", "{DDE9D453-5FC8-4092-972C-8A063E021E9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "ChatGptDiffApp.Tests\Tests.csproj", "{004498DE-03FE-44DB-A7C6-7DC27606AB19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DDE9D453-5FC8-4092-972C-8A063E021E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDE9D453-5FC8-4092-972C-8A063E021E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDE9D453-5FC8-4092-972C-8A063E021E9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{004498DE-03FE-44DB-A7C6-7DC27606AB19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004498DE-03FE-44DB-A7C6-7DC27606AB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004498DE-03FE-44DB-A7C6-7DC27606AB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004498DE-03FE-44DB-A7C6-7DC27606AB19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
