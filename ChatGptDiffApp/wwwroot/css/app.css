@@ -138,13 +138,13 @@ label {
 .diff-deleted {
   padding: 4px 0; /* Adjust padding as needed */
   margin: 0; /* Remove margin */
-  color: red;
+  background: rgba(255, 0, 0, 0.5);
 }
 
 .diff-inserted {
   padding: 4px 0; /* Adjust padding as needed */
   margin: 0; /* Remove margin */
-  color: green;
+  background: rgba(0, 255, 0, 0.5);
 }
 
 .diff-no-change {
