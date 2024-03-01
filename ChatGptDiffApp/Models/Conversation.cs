@@ -35,13 +35,13 @@ namespace ChatGPTDiffApp.Models
                         switch (line.Type)
                         {
                             case ChangeType.Inserted:
-                                diffDisplay.Append("<div class='diff-inserted'>+ ");
+                                diffDisplay.Append("<div class='diff-line diff-inserted'>+ ");
                                 break;
                             case ChangeType.Deleted:
-                                diffDisplay.Append("<div class='diff-deleted'>- ");
+                                diffDisplay.Append("<div class='diff-line diff-deleted'>- ");
                                 break;
                             default:
-                                diffDisplay.Append("<div class='diff-no-change'>");
+                                diffDisplay.Append("<div class='diff-line'>");
                                 break;
                         }
 

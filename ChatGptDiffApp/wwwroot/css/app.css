@@ -135,21 +135,17 @@ label {
   margin-top: 20px;
 }
 
+.diff-line {
+  padding: 4px 0;
+  margin: 0;
+}
+
 .diff-deleted {
-  padding: 4px 0; /* Adjust padding as needed */
-  margin: 0; /* Remove margin */
   background: rgba(255, 0, 0, 0.5);
 }
 
 .diff-inserted {
-  padding: 4px 0; /* Adjust padding as needed */
-  margin: 0; /* Remove margin */
   background: rgba(0, 255, 0, 0.5);
-}
-
-.diff-no-change {
-  padding: 4px 0; /* Adjust padding as needed */
-  margin: 0; /* Remove margin */
 }
 
 .response {
