@@ -36,7 +36,7 @@
 
             // Prepare the data for the request
             var responseContent = await ChatGPTService.GetResponseAsync(conversation);
-            
+
             // Add the response to the conversation
             if (!string.IsNullOrEmpty(responseContent))
             {
@@ -54,4 +54,3 @@
         newPrompt = string.Empty;
     }
 }
-
