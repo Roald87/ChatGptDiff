@@ -16,6 +16,8 @@
     }
     else if (message.Role == "assistant")
     {
+        @* TODO Security Consideration
+        When using MarkupString to render HTML directly, ensure that the content you're rendering is safe and free from potential cross-site scripting (XSS) vulnerabilities. Since the DiffView method generates the HTML content programmatically and you control the input, this should generally be safe. However, always be cautious and sanitize any dynamic content or user input that might be included in the HTML. *@
         <div class="response">@((MarkupString)message.Content)</div>
     }
 }
