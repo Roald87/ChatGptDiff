@@ -112,3 +112,51 @@ a,
 code {
   color: #c02d76;
 }
+
+textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+textarea.response {
+  background-color: #f3f3f3;
+  color: #333;
+}
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+}
+
+.diff-deleted {
+  padding: 4px 0; /* Adjust padding as needed */
+  margin: 0; /* Remove margin */
+  color: red;
+}
+
+.diff-inserted {
+  padding: 4px 0; /* Adjust padding as needed */
+  margin: 0; /* Remove margin */
+  color: green;
+}
+
+.diff-no-change {
+  padding: 4px 0; /* Adjust padding as needed */
+  margin: 0; /* Remove margin */
+}
+
+.response {
+  background-color: #f3f3f3;
+  color: #333;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  white-space: pre-wrap; /* Ensures that whitespace and line breaks are preserved */
+}
