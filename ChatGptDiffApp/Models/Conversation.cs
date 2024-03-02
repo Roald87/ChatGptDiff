@@ -45,7 +45,7 @@ namespace ChatGPTDiffApp.Models
                                 break;
                         }
 
-                        diffDisplay.AppendLine($"{HtmlEncode(line.Text)}</div>");
+                        diffDisplay.AppendLine($"{line.Text}</div>");
                     }
 
                     Message diffMessage = new() { Role = m.Role, Content = diffDisplay.ToString() };
