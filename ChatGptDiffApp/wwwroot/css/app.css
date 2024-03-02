@@ -110,14 +110,15 @@ a,
 }
 
 textarea {
-  width: 100%;
   margin-bottom: 10px;
   padding: 10px;
   box-sizing: border-box;
+  min-width: 700px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
@@ -136,8 +137,11 @@ button {
 
 .response {
   background-color: #f3f3f3;
+  font-family: "Courier New", Courier, monospace;
+  font-size: small;
   color: #333;
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  max-width: 700px;
 }
