@@ -118,8 +118,8 @@ textarea {
 
 button {
   padding: 10px;
-  margin-bottom: 10px;
   cursor: pointer;
+  vertical-align: top;
 }
 
 .diff-line {
