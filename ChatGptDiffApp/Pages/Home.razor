@@ -50,6 +50,12 @@
 
     protected override void OnInitialized()
     {
+         // Initialize the conversation with a short hardcoded conversation for testing
+        conversation.Add(new Message { Role = "user", Content = "Hello, how are you?" });
+        conversation.Add(new Message { Role = "assistant", Content = "```python\ndef (replace_string(string, x):\n\treturn string\n ```" });
+        conversation.Add(new Message { Role = "user", Content = "Can you tell me a joke?" });
+        conversation.Add(new Message { Role = "assistant", Content = "```python\ndef (replace_string(string, x):\n\treturn string.replace(x)\n```" });
+
         // Optionally initialize the conversation with an empty prompt for the user to fill
         newPrompt = string.Empty;
     }
