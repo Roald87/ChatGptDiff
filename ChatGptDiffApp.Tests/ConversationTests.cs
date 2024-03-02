@@ -32,7 +32,7 @@ namespace DiffChat.Tests
             var diffView = conversation.DiffView();
             Assert.Equal(2, diffView.Count);
             Assert.Equal("Hello", normalView[0].Content);
-            Assert.Contains("<div>Hi there!</div>", diffView[1].Content);
+            Assert.Contains("<div class='diff-line'>Hi there!</div>", diffView[1].Content);
         }
 
         [Fact]
@@ -51,8 +51,8 @@ namespace DiffChat.Tests
 
             var diffView = conversation.DiffView();
             Assert.Equal(4, diffView.Count);
-            Assert.Contains("<div style='color:green;'>+", diffView[3].Content);
-            Assert.Contains("<div style='color:red;'>-", diffView[3].Content);
+            Assert.Contains("<div class='diff-line diff-inserted'>+", diffView[3].Content);
+            Assert.Contains("<div class='diff-line diff-deleted'>-", diffView[3].Content);
             Console.WriteLine(diffView[1].Content);
         }
     }
