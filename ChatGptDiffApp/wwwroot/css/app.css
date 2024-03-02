@@ -154,5 +154,4 @@ label {
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  white-space: pre-wrap; /* Ensures that whitespace and line breaks are preserved */
 }
