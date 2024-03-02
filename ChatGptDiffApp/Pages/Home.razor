@@ -9,6 +9,7 @@
 <textarea @bind="newPrompt" placeholder="Enter your next prompt here"></textarea>
 <button @onclick="SendPrompt">Send</button>
 <label><input type="checkbox" @bind="beBrief" /> Be brief</label>
+<label><input type="checkbox" @onchange="ToggleTestConversation" /> Test conversation</label>
 
 @foreach (var message in conversation.DiffView().LazyReverse())
 {
@@ -57,14 +58,27 @@
         }
     }
 
+    private async Task ToggleTestConversation(ChangeEventArgs e)
+    {
+        // Clear the existing conversation
+        conversation.Clear();
+
+        // Check the new value of the checkbox and add test messages if checked
+        if ((bool)e.Value)
+        {
+             // Initialize the conversation with a short hardcoded conversation for testing
+            conversation.Add(new Message { Role = "user", Content = "Hello, how are you?" });
+            conversation.Add(new Message { Role = "assistant", Content = "```python\ndef (replace_string(string, x):\n\treturn string\n ```" });
+            conversation.Add(new Message { Role = "user", Content = "Can you tell me a joke?" });
+            conversation.Add(new Message { Role = "assistant", Content = "```python\ndef (replace_string(string, x):\n\treturn string.replace(x)\n```" });
+        }
+
+        // This will force the UI to update with the new conversation state
+        StateHasChanged();
+    }
+
     protected override void OnInitialized()
     {
-         // Initialize the conversation with a short hardcoded conversation for testing
-        conversation.Add(new Message { Role = "user", Content = "Hello, how are you?" });
-        conversation.Add(new Message { Role = "assistant", Content = "```python\ndef (replace_string(string, x):\n\treturn string\n ```" });
-        conversation.Add(new Message { Role = "user", Content = "Can you tell me a joke?" });
-        conversation.Add(new Message { Role = "assistant", Content = "```python\ndef (replace_string(string, x):\n\treturn string.replace(x)\n```" });
-
         // Optionally initialize the conversation with an empty prompt for the user to fill
         newPrompt = string.Empty;
     }
