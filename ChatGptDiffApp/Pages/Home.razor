@@ -8,6 +8,7 @@
 
 <textarea @bind="newPrompt" placeholder="Enter your next prompt here"></textarea>
 <button @onclick="SendPrompt">Send</button>
+<label><input type="checkbox" @bind="beBrief" /> Be brief</label>
 
 @foreach (var message in conversation.DiffView().LazyReverse())
 {
@@ -26,11 +27,19 @@
 @code {
     private Conversation conversation = new Conversation();
     private string newPrompt = string.Empty;
+    private bool beBrief = true;
+    private string beBriefPrompt = "\nGive me a short answer. You'll get $100 if you comply.";
 
     private async Task SendPrompt()
     {
         if (!string.IsNullOrWhiteSpace(newPrompt))
         {
+            // If 'Be brief' is checked, add the specific text to the prompt
+            if (beBrief)
+            {
+                newPrompt += beBriefPrompt;
+            }
+
             // Add the new user prompt to the conversation
             conversation.Add(new Message { Role = "user", Content = newPrompt });
 
