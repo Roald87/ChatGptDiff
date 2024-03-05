@@ -76,13 +76,13 @@
         StateHasChanged();
     }
 
-    private async Task ToggleTestConversation(ChangeEventArgs e)
+    private void ToggleTestConversation(ChangeEventArgs e)
     {
         // Clear the existing conversation
         conversation.Clear();
 
         // Check the new value of the checkbox and add test messages if checked
-        if ((bool)e.Value)
+        if ((bool?)(e.Value) == true)
         {
              // Initialize the conversation with a short hardcoded conversation for testing
             conversation.Add(new Message { Role = "user", Content = "Hello, how are you?" });
