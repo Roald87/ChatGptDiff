@@ -11,18 +11,23 @@
 <label><input type="checkbox" @bind="beBrief" /> Be brief</label>
 <label><input type="checkbox" @onchange="ToggleTestConversation" /> Test conversation</label>
 
-@foreach (var message in conversation.DiffView().LazyReverse())
+@for (int i = conversation.Count() - 1; i >= 0; i--)
 {
-    if (message.Role == "user")
-    {
-        <textarea @bind="message.Content" placeholder="Your prompt"></textarea>
-    }
-    else if (message.Role == "assistant")
-    {
-        @* TODO Security Consideration
-        When using MarkupString to render HTML directly, ensure that the content you're rendering is safe and free from potential cross-site scripting (XSS) vulnerabilities. Since the DiffView method generates the HTML content programmatically and you control the input, this should generally be safe. However, always be cautious and sanitize any dynamic content or user input that might be included in the HTML. *@
-        <div class="response">@((MarkupString)message.Content)</div>
-    }
+    int currentIndex = i; // Local variable capturing the loop variable, else remove message will always be -1
+    var message = conversation.DiffView().ElementAt(currentIndex);
+    <div class="message-container">
+        @if (message.Role == "user")
+        {
+            <textarea @bind="message.Content" placeholder="Your prompt"></textarea>
+        }
+        else if (message.Role == "assistant")
+        {
+             @* TODO Security Consideration
+            When using MarkupString to render HTML directly, ensure that the content you're rendering is safe and free from potential cross-site scripting (XSS) vulnerabilities. Since the DiffView method generates the HTML content programmatically and you control the input, this should generally be safe. However, always be cautious and sanitize any dynamic content or user input that might be included in the HTML. *@
+            <div class="response">@((MarkupString)message.Content)</div>
+        }
+        <button @onclick="() => RemoveMessage(currentIndex)" class="trashcan-button">🗑️</button>
+    </div>
 }
 
 @code {
@@ -56,6 +61,19 @@
             // Clear the new prompt field and prepare for the next input
             newPrompt = string.Empty;
         }
+    }
+
+    private void RemoveMessage(int index)
+    {
+        if (index < 0 || index > conversation.Count - 1)
+        {
+            Console.Error.WriteLine($"There is no message in the conversation with index {index}!");
+            return;
+        }
+
+        conversation.RemoveAt(index);
+        // Re-render the component to update the UI
+        StateHasChanged();
     }
 
     private async Task ToggleTestConversation(ChangeEventArgs e)
