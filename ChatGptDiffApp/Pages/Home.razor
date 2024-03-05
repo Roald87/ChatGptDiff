@@ -3,6 +3,7 @@
 @using ChatGPTDiffApp.Models
 @using System.Linq
 @using ChatGPTDiffApp.Extensions
+@using DiffPlex.DiffBuilder.Model
 
 <h1>Chat with GPT</h1>
 
@@ -22,13 +23,19 @@
         }
         else if (message.Role == "assistant")
         {
-             @* TODO Security Consideration
-            When using MarkupString to render HTML directly, ensure that the content you're rendering is safe and free from potential cross-site scripting (XSS) vulnerabilities. Since the DiffView method generates the HTML content programmatically and you control the input, this should generally be safe. However, always be cautious and sanitize any dynamic content or user input that might be included in the HTML. *@
-            <div class="response">@((MarkupString)message.Content)</div>
+            <div class="response">
+                @{
+                    foreach (var diffMessage in message.Diff.Lines)
+                    {
+                        <div class="@GetDiffClass(diffMessage.Type)">@diffMessage.Text</div>
+                    }
+                }
+            </div>
         }
         <button @onclick="() => RemoveMessage(currentIndex)" class="trashcan-button">🗑️</button>
     </div>
 }
+
 
 @code {
     private Conversation conversation = new Conversation();
@@ -99,5 +106,15 @@
     {
         // Optionally initialize the conversation with an empty prompt for the user to fill
         newPrompt = string.Empty;
+    }
+
+    private string GetDiffClass(ChangeType type)
+    {
+        return type switch
+        {
+            ChangeType.Inserted => "diff-line diff-inserted",
+            ChangeType.Deleted => "diff-line diff-deleted",
+            _ => "diff-line"
+        };
     }
 }
