@@ -113,7 +113,7 @@ textarea {
   margin-bottom: 10px;
   padding: 10px;
   box-sizing: border-box;
-  min-width: 700px;
+  max-width: 700px;
 }
 
 button {
@@ -146,15 +146,22 @@ button {
   max-width: 700px;
 }
 
+.message-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+}
+
+/* If your message or prompt frames are block elements (like divs), ensure they don't take up the full width so there's space for the trashcan button */
+.message-container > div,
+.message-container > textarea {
+  flex-grow: 1; /* Allows the message/prompt frames to fill the container but leaves space for the button */
+}
+
 .trashcan-button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  vertical-align: middle;
-}
-
-.message-container {
-  position: relative;
-  padding: 4px;
+  font-size: 16px; /* Adjust size as necessary */
 }
