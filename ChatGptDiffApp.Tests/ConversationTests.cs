@@ -33,9 +33,7 @@ namespace DiffChat.Tests
             var diffView = conversation.DiffView();
             Assert.Equal(2, diffView.Count);
             Assert.Equal("Hello", normalView[0].Content);
-#nullable disable
             Assert.False(diffView[1].Diff.HasDifferences);
-#nullable restore
         }
 
         [Fact]
@@ -54,11 +52,9 @@ namespace DiffChat.Tests
 
             var diffView = conversation.DiffView();
             Assert.Equal(4, diffView.Count);
-#nullable disable
             Assert.True(diffView[3].Diff.HasDifferences);
             Assert.Equal(ChangeType.Deleted, diffView[3].Diff.Lines[0].Type);
             Assert.Equal(ChangeType.Inserted, diffView[3].Diff.Lines[1].Type);
-#nullable restore
         }
     }
 }
