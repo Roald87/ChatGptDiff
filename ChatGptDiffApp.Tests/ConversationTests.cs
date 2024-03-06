@@ -1,4 +1,3 @@
-using System.Linq;
 using ChatGPTDiffApp.Models;
 using DiffPlex.DiffBuilder.Model;
 using Xunit;
