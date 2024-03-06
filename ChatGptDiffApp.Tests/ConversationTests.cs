@@ -1,5 +1,6 @@
 using System.Linq;
 using ChatGPTDiffApp.Models;
+using DiffPlex.DiffBuilder.Model;
 using Xunit;
 
 namespace DiffChat.Tests
@@ -32,7 +33,9 @@ namespace DiffChat.Tests
             var diffView = conversation.DiffView();
             Assert.Equal(2, diffView.Count);
             Assert.Equal("Hello", normalView[0].Content);
-            Assert.Contains("<div class='diff-line'>Hi there!</div>", diffView[1].Content);
+#nullable disable
+            Assert.False(diffView[1].Diff.HasDifferences);
+#nullable restore
         }
 
         [Fact]
@@ -51,9 +54,11 @@ namespace DiffChat.Tests
 
             var diffView = conversation.DiffView();
             Assert.Equal(4, diffView.Count);
-            Assert.Contains("<div class='diff-line diff-inserted'>+", diffView[3].Content);
-            Assert.Contains("<div class='diff-line diff-deleted'>-", diffView[3].Content);
-            Console.WriteLine(diffView[1].Content);
+#nullable disable
+            Assert.True(diffView[3].Diff.HasDifferences);
+            Assert.Equal(ChangeType.Deleted, diffView[3].Diff.Lines[0].Type);
+            Assert.Equal(ChangeType.Inserted, diffView[3].Diff.Lines[1].Type);
+#nullable restore
         }
     }
 }
