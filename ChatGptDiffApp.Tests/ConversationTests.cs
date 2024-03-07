@@ -20,8 +20,8 @@ namespace DiffChat.Tests
         {
             var conversation = new Conversation
             {
-                new Message { Role = "user", Content = "Hello" },
-                new Message { Role = "assistant", Content = "Hi there!" }
+                UserMessage.Create("Hello"),
+                AssistantMessage.Create("Hi there!")
             };
 
             var normalView = conversation.NormalView();
@@ -40,10 +40,10 @@ namespace DiffChat.Tests
         {
             var conversation = new Conversation
             {
-                new Message { Role = "user", Content = "How are you?" },
-                new Message { Role = "assistant", Content = "I'm good, thanks!" },
-                new Message { Role = "user", Content = "Tell me a joke." },
-                new Message { Role = "assistant", Content = "I'm good thanks?" }
+                UserMessage.Create("How are you?"),
+                AssistantMessage.Create("I'm good, thanks!"),
+                UserMessage.Create("Tell me a joke."),
+                AssistantMessage.Create("I'm good thanks?")
             };
 
             var normalView = conversation.NormalView();

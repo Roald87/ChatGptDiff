@@ -53,7 +53,7 @@
             }
 
             // Add the new user prompt to the conversation
-            conversation.Add(new Message { Role = "user", Content = newPrompt });
+            conversation.Add(UserMessage.Create(newPrompt));
 
             // Prepare the data for the request
             var responseContent = await ChatGPTService.GetResponseAsync(conversation);
@@ -61,7 +61,7 @@
             // Add the response to the conversation
             if (!string.IsNullOrEmpty(responseContent))
             {
-                conversation.Add(new Message { Role = "assistant", Content = responseContent });
+                conversation.Add(AssistantMessage.Create(responseContent));
             }
 
             // Clear the new prompt field and prepare for the next input
@@ -91,10 +91,10 @@
         if ((bool?)(e.Value) == true)
         {
              // Initialize the conversation with a short hardcoded conversation for testing
-            conversation.Add(new Message { Role = "user", Content = "a python method to create fibonacci numbers\nGive me a short answer. You'll get $100 if you comply." });
-            conversation.Add(new Message { Role = "assistant", Content = "Here is a Python method to create Fibonacci numbers:\n```\ndef fibonacci(n):\n    fib = [0, 1]\n    for i in range(2, n):\n        fib.append(fib[i-1] + fib[i-2])\n    return fib\n```\nI have complied with your request for a short answer.\n" });
-            conversation.Add(new Message { Role = "user", Content = "only give me the python code and add a docstring with an example\nGive me a short answer. You'll get $100 if you comply." });
-            conversation.Add(new Message { Role = "assistant", Content = "```\ndef fibonacci(n):\n\"\"\"\nGenerate a list of Fibonacci numbers up to the nth number.\n\nParameters:\nn (int): The number of Fibonacci numbers to generate.\n\nReturns:\nlist: A list of Fibonacci numbers up to the nth number.\n\nExample:\n>>> fibonacci(5)\n[0, 1, 1, 2, 3]\n\"\"\"\n    fib = [0, 1]\n    for i in range(2, n):\n        fib.append(fib[i-1] + fib[i-2])\n    return fib\n```\n" });
+            conversation.Add(UserMessage.Create("a python method to create fibonacci numbers\nGive me a short answer. You'll get $100 if you comply."));
+            conversation.Add(AssistantMessage.Create("Here is a Python method to create Fibonacci numbers:\n```\ndef fibonacci(n):\n    fib = [0, 1]\n    for i in range(2, n):\n        fib.append(fib[i-1] + fib[i-2])\n    return fib\n```\nI have complied with your request for a short answer.\n"));
+            conversation.Add(UserMessage.Create("only give me the python code and add a docstring with an example\nGive me a short answer. You'll get $100 if you comply."));
+            conversation.Add(AssistantMessage.Create("```\ndef fibonacci(n):\n\"\"\"\nGenerate a list of Fibonacci numbers up to the nth number.\n\nParameters:\nn (int): The number of Fibonacci numbers to generate.\n\nReturns:\nlist: A list of Fibonacci numbers up to the nth number.\n\nExample:\n>>> fibonacci(5)\n[0, 1, 1, 2, 3]\n\"\"\"\n    fib = [0, 1]\n    for i in range(2, n):\n        fib.append(fib[i-1] + fib[i-2])\n    return fib\n```\n" ));
         }
 
         // This will force the UI to update with the new conversation state
