@@ -2,10 +2,23 @@ using DiffPlex.DiffBuilder.Model;
 
 namespace ChatGPTDiffApp.Models
 {
-    public class Message
+    public interface IMessage
     {
-        public string Role { get; set; } = string.Empty; // Default to empty string
-        public string Content { get; set; } = string.Empty; // Default to empty string
-        public DiffPaneModel Diff { get; set; } = new DiffPaneModel();
+        string Role { get; set; }
+        string Content { get; set; }
+    }
+
+    public class Message : IMessage
+    {
+        public string Role { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+    }
+
+    public class DiffMessage : IMessage
+    {
+        public string Role { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+
+        public DiffPaneModel Diff { get; set; } = new();
     }
 }
