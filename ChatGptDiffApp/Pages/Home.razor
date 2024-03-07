@@ -22,7 +22,7 @@ else
 
 @for (int i = conversation.Count() - 1; i >= 0; i--)
 {
-    int currentIndex = i; // Local variable capturing the loop variable, else remove message will always be -1
+    int currentIndex = i; // Local variable capturing the loop variable, else currentIndex in RemoveMessage(currentIndex) is always -1
     var message = conversation.DiffView().ElementAt(currentIndex);
     <div class="message-container">
         @if (message.Role == "user")
@@ -58,25 +58,20 @@ else
         {
             isLoading = true;
 
-            // If 'Be brief' is checked, add the specific text to the prompt
             if (beBrief)
             {
                 newPrompt += beBriefPrompt;
             }
 
-            // Add the new user prompt to the conversation
             conversation.Add(UserMessage.Create(newPrompt));
 
-            // Prepare the data for the request
             var responseContent = await ChatGPTService.GetResponseAsync(conversation);
 
-            // Add the response to the conversation
             if (!string.IsNullOrEmpty(responseContent))
             {
                 conversation.Add(AssistantMessage.Create(responseContent));
             }
 
-            // Clear the new prompt field and prepare for the next input
             newPrompt = string.Empty;
             isLoading = false;
         }
