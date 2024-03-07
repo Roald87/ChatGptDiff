@@ -10,6 +10,8 @@ namespace ChatGPTDiffApp.Models
 
     public class Message : IMessage
     {
+        internal Message() { }
+
         public string Role { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
     }
