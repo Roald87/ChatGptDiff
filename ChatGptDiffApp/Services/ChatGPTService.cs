@@ -20,6 +20,7 @@ namespace ChatGPTDiffApp.Services
         public async Task<string> GetResponseAsync(List<Message> conversation)
         {
             string apiKey = await _localStorage.GetItemAsStringAsync("apiKey") ?? string.Empty;
+            // TODO model name is hardcoded here
             string selectedModel =
                 await _localStorage.GetItemAsStringAsync("selectedModel") ?? "gpt-3.5-turbo"; // Default to GPT-3.5 Turbo
 
