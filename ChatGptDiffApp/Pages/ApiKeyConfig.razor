@@ -6,12 +6,27 @@
 <input @bind="apiKey" placeholder="Enter your API Key here" />
 <button @onclick="SaveApiKey">Save API Key</button>
 
+<h3>Select GPT Model</h3>
+<select @bind="selectedModel">
+    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+    <option value="gpt-4">GPT-4</option>
+    <option value="gpt-4-turbo-preview">GPT-4 Turbo Preview</option>
+</select>
+<button @onclick="SaveModel">Save Model Selection</button>
+
 @code {
     private string apiKey = string.Empty;
+    private string selectedModel = "gpt-3.5-turbo"; // Default model
 
     private async Task SaveApiKey()
     {
         await LocalStorage.SetItemAsStringAsync("apiKey", apiKey);
+        NavigationManager.NavigateTo("/"); // Redirect to home page or a confirmation page
+    }
+
+    private async Task SaveModel()
+    {
+        await LocalStorage.SetItemAsStringAsync("selectedModel", selectedModel);
         NavigationManager.NavigateTo("/"); // Redirect to home page or a confirmation page
     }
 }

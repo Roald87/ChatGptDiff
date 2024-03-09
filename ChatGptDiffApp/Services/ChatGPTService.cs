@@ -20,11 +20,14 @@ namespace ChatGPTDiffApp.Services
         public async Task<string> GetResponseAsync(List<Message> conversation)
         {
             string apiKey = await _localStorage.GetItemAsStringAsync("apiKey") ?? string.Empty;
+            string selectedModel =
+                await _localStorage.GetItemAsStringAsync("selectedModel") ?? "gpt-3.5-turbo"; // Default to GPT-3.5 Turbo
+
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
-            // The request payload now includes the entire conversation history
-            var data = new { model = "gpt-3.5-turbo", messages = conversation };
+            // The request payload now includes the entire conversation history and the selected model
+            var data = new { model = selectedModel, messages = conversation };
 
             var response = await _httpClient.PostAsJsonAsync(OpenAiEndpoint, data);
             response.EnsureSuccessStatusCode();
