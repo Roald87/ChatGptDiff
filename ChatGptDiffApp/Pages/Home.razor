@@ -19,20 +19,20 @@ else
 
 <label><input type="checkbox" @bind="beBrief" /> Be brief</label>
 <label><input type="checkbox" @onchange="ToggleTestConversation" /> Test conversation</label>
+<label><input type="checkbox" @bind="showDiffView" /> Show Diff View</label>
+
 @{
-// TODO: add another option to show either the diff or the normal display
 // TODO: white lines seem to be removed
 // TODO: add copy that copies the content
 // TODO: remove code ticks is present
 // TODO: save conversation, only remove when user presses button
 // TODO: confirmation on removing (part of) the conversation
-
 }
 
 @for (int i = conversation.Count() - 1; i >= 0; i--)
 {
     int currentIndex = i; // Local variable capturing the loop variable, else currentIndex in RemoveMessage(currentIndex) is always -1
-    var message = conversation.DiffView().ElementAt(currentIndex);
+    var message = conversation.NormalView().ElementAt(currentIndex);
     <div class="message-container">
         @if (message.Role == "user")
         {
@@ -40,14 +40,23 @@ else
         }
         else if (message.Role == "assistant")
         {
-            <div class="response">
-                @{
-                    foreach (var diffMessage in message.Diff.Lines)
-                    {
-                        <div class="@GetDiffClass(diffMessage.Type)">@diffMessage.Text</div>
+            if (showDiffView)
+            {
+                DiffMessage dm = conversation.DiffView().ElementAt(currentIndex);
+                <div class="response">
+                    @{
+                        foreach (var diffMessage in dm.Diff.Lines)
+                        {
+                            <div class="@GetDiffClass(diffMessage.Type)">@diffMessage.Text</div>
+                        }
                     }
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <div class="response">@message.Content</div>
+            }
+
         }
         <button @onclick="() => RemoveMessage(currentIndex)" class="trashcan-button">🗑️</button>
     </div>
@@ -60,6 +69,8 @@ else
     private bool beBrief = true;
     private string beBriefPrompt = "\nGive me a short answer. You'll get $100 if you comply.";
     private bool isLoading;
+    private bool showDiffView = true;
+
 
     private async Task SendPrompt()
     {
