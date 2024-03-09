@@ -2,6 +2,7 @@
 @inject ChatGPTDiffApp.Services.ChatGPTService ChatGPTService
 @using System.Linq
 @using DiffPlex.DiffBuilder.Model
+@inject IJSRuntime JSRuntime;
 @using ChatGPTDiffApp.Models
 
 <h1>Chat with GPT</h1>
@@ -24,7 +25,6 @@ else
 
 @{
 // TODO: white lines seem to be removed
-// TODO: add copy that copies the content
 // TODO: remove code ticks is present
 // TODO: save conversation, only remove when user presses button
 // TODO: confirmation on removing (part of) the conversation
@@ -59,6 +59,11 @@ else
             }
 
         }
+        <button @onclick="() => CopyToClipboard(message.Content)" class="copy-button">Copy</button>
+        @if (showCopyPrompt)
+        {
+            <div>Response copied!</div>
+        }
         <button @onclick="() => RemoveMessage(currentIndex)" class="trashcan-button">🗑️</button>
     </div>
 }
@@ -71,7 +76,7 @@ else
     private string beBriefPrompt = "\nGive me a short answer. You'll get $100 if you comply.";
     private bool isLoading;
     private bool showDiffView = true;
-
+    private bool showCopyPrompt = false;
 
     private async Task SendPrompt()
     {
@@ -108,6 +113,16 @@ else
 
         conversation.RemoveAt(index);
         // Re-render the component to update the UI
+        StateHasChanged();
+    }
+
+    private async Task CopyToClipboard(string text)
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
+        showCopyPrompt = true;
+        StateHasChanged();
+        await Task.Delay(3000); // Show prompt for 3 seconds
+        showCopyPrompt = false;
         StateHasChanged();
     }
 
