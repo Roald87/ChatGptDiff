@@ -34,6 +34,7 @@ else
 {
     int currentIndex = i; // Local variable capturing the loop variable, else currentIndex in RemoveMessage(currentIndex) is always -1
     var message = conversation.NormalView().ElementAt(currentIndex);
+
     <div class="message-container">
         @if (message.Role == "user")
         {
@@ -59,8 +60,8 @@ else
             }
 
         }
-        <button @onclick="() => CopyToClipboard(message.Content)" class="copy-button">Copy</button>
-        @if (showCopyPrompt)
+        <button @onclick="() => CopyToClipboard(message.Content, currentIndex)" class="copy-button">Copy</button>
+        @if (currentIndex == copiedResponseIndex)
         {
             <div>Response copied!</div>
         }
@@ -77,6 +78,7 @@ else
     private bool isLoading;
     private bool showDiffView = true;
     private bool showCopyPrompt = false;
+    private int copiedResponseIndex = -1;
 
     private async Task SendPrompt()
     {
@@ -127,13 +129,14 @@ else
         StateHasChanged();
     }
 
-    private async Task CopyToClipboard(string text)
+    private async Task CopyToClipboard(string text, int index)
     {
         await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
-        showCopyPrompt = true;
+        // Set the local flag for the copied message only
+        copiedResponseIndex = index;
         StateHasChanged();
         await Task.Delay(3000); // Show prompt for 3 seconds
-        showCopyPrompt = false;
+        copiedResponseIndex = -1;
         StateHasChanged();
     }
 
