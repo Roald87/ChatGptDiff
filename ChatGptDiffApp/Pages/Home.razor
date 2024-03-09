@@ -19,10 +19,12 @@ else
 
 <label><input type="checkbox" @bind="beBrief" /> Be brief</label>
 <label><input type="checkbox" @onchange="ToggleTestConversation" /> Test conversation</label>
+@{
 // TODO: add another option to show either the diff or the normal display
 // TODO: white lines seem to be removed
 // TODO: add copy that copies the content
 // TODO: remove code ticks is present
+}
 
 @for (int i = conversation.Count() - 1; i >= 0; i--)
 {
