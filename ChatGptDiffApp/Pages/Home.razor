@@ -165,6 +165,15 @@ else
         newPrompt = string.Empty;
     }
 
+    // Call this method after the component has rendered
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("textareaAutoResize.initialize");
+        }
+    }
+
     private string GetDiffClass(ChangeType type)
     {
         return type switch
