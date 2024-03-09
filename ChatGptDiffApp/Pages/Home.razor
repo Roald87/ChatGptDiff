@@ -55,7 +55,7 @@ else
             }
             else
             {
-                <div class="response">@message.Content</div>
+                <textarea @bind="message.Content" @onblur="() => UpdateMessageContent(currentIndex, message.Content)" placeholder="Chat GPTs answer"></textarea>
             }
 
         }
@@ -101,6 +101,17 @@ else
             newPrompt = string.Empty;
             isLoading = false;
         }
+    }
+
+    private void UpdateMessageContent(int index, string text)
+    {
+        if (index < 0 || index > conversation.Count - 1)
+        {
+            Console.Error.WriteLine($"There is no message in the conversation with index {index}!");
+            return;
+        }
+
+        conversation[index].Content = text;
     }
 
     private void RemoveMessage(int index)
