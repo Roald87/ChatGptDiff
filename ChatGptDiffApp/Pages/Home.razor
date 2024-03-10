@@ -7,18 +7,18 @@
 
 <h1>Chat with GPT</h1>
 
-<div class="message-container">
 @if (isLoading)
 {
     <div class="loader"></div>
 }
 else
 {
+    <div class="message-container">
     @* TODO: make prompt window equally wide as the response *@
     <textarea @bind="newPrompt" placeholder="Enter your next prompt here"></textarea>
     <button @onclick="SendPrompt">Send</button>
+    </div>
 }
-</div>
 
 <label><input type="checkbox" @bind="beBrief" /> Be brief</label>
 <label><input type="checkbox" @onchange="ToggleTestConversation" /> Test conversation</label>
